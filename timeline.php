@@ -44,8 +44,6 @@
 
     </div>
     
-
-
 <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
@@ -54,21 +52,21 @@
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-      <form class="login">
+      <form class="login" onsubmit="return storeTask();">
             <div class="mb-3">
-                <label for="exampleInputEmail1" class="form-label">Title</label>
-                <input type="text" class="form-control" name="title" required id="exampleInputEmail1" aria-describedby="emailHelp">
+                <label for="exampleInputTitle" class="form-label">Title</label>
+                <input type="text" class="form-control" name="title" required id="title" aria-describedby="titleHelp">
             </div>
             <div class="mb-3">
-                <label for="exampleInputPassword1" class="form-label">Description</label>
-                <textarea class="form-control" name="description" required col=4></textarea>
+                <label for="exampleInputDescription" class="form-label">Description</label>
+                <textarea class="form-control" name="description" id="description" required col=4></textarea>
                 </div>
             <div class="mb-3">
-                <label for="exampleInputPassword1" class="form-label">Task Status</label>
-                <select class="form-select" name="status" aria-label="Default select example">
-                    <option value="1">Todo</option>
-                    <option value="2">In progress</option>
-                    <option value="3">Done</option>
+                <label for="exampleInputOption" class="form-label">Task Status</label>
+                <select class="form-select" name="status" id="status" aria-label="Default select example">
+                    <option value="todo">Todo</option>
+                    <option value="inProgress">In progress</option>
+                    <option value="done">Done</option>
                 </select>
             </div>
             <button type="submit" class="btn btn-primary create-task">Save</button>
@@ -91,7 +89,6 @@
     
 
 $(document).ready(function(){
-    
     loadUserTasks();
 });
 
@@ -129,17 +126,30 @@ function loadUserTasks(){
                             .replace("{{description}}", currentTask.description)
                             .replace("{{"+currentTask.status+"_selected}}", "selected")
                             .replace("{{created_at}}", currentTask.created_at);
-            // taskTemplate = taskTemplate.replace("{{todo_selected}}", "");
-            // taskTemplate = taskTemplate.replace("{{inProgress_selected}}", "" );
-            // taskTemplate = taskTemplate.replace("{{done_selected}}","");
         }
 
         $("#allTasks").html(userTasksTemplate);
-    });
-   
-    
+    }); 
 }
 
-
+function storeTask(){
+    const title = $("#title").val();
+    const description = $("#description").val();
+    const status = $("#status").val();
+    const apiEndpoint = "http://localhost/task_managment_project_web/task_logic.php";
+        $.post(apiEndpoint, {
+            'title': title,
+            'description': description,
+            'status': status
+        }, function(response){
+            if(response.success == false){
+                alert(response.message);
+            }else{
+                alert("here");
+                // location.reload();
+            }
+        });
+        return false;
+    }
 </script>
 </html>
