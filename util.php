@@ -76,7 +76,7 @@
 
     function storeTaskToFile(array $task, $userId){
         global $dbConnection;
-        $sqlQuery = " INSERT INTO `tasks` (`title`,`description`,`status`, `id_user`)
+        $sqlQuery = "INSERT INTO `tasks` (`title`,`description`,`status`, `id_user`)
         VALUES (:title, :description, :status, :userId); ";
         $statement = $dbConnection->prepare($sqlQuery);
         $statement->bindParam(":title", $task['title']);

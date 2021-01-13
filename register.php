@@ -54,7 +54,7 @@ if (isUserLoggedIn()) {
             if(response.success == false){
                 alert(response.message);
             }else{
-                location.reload();
+                location.reload(true);
             }
         });
         return false;

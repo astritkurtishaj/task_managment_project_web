@@ -10,7 +10,6 @@ header('Content-Type: application/json');
         ]);
 
     }
-
     if (!isUserLoggedIn()) {
         echo json_encode([
             'success' => false,
@@ -24,28 +23,15 @@ $description = trim($_POST['description']);
 $status = trim($_POST['status']);
 $userId = $_SESSION['id_user'];
 
-
-
 $task = [
     'title' => $title,
     'description' => $description,
     'status' => $status
 ];
 
-echo "<pre>";
-var_dump($task);
-die();
-
-
 
 if(!empty($title) && !empty($description) && !empty($status)){
     storeTaskToFile($task, $userId);
 }
-
-// if (isUserLoggedIn()) {
-//     header("Location: /social-network-db/timeline.php");
-//     die();
-// }
-
 
 ?>

@@ -30,6 +30,7 @@
         'tasks' => []
     ];
 
+
     if (doesUserExistByEmail($email)) {
         echo "This user already exists!";
         die();
@@ -37,4 +38,5 @@
 
     // save to file
     storeUserToFile($user);
+    header("Location: /task_managment_project_web/index.php");
 ?>

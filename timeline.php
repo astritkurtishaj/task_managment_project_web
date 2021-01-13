@@ -28,7 +28,7 @@
     <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav">
         <li class="nav-item active">
-            <a class="nav-link" href="#">Tasks <span class="sr-only">(current)</span></a>
+            <a class="nav-link" href="#">Tasks</a>
         </li>
         <li class="nav-item">
             <a class="nav-link" href="#" id="logout">Logout</a>
@@ -122,8 +122,8 @@ function loadUserTasks(){
         let userTasksTemplate = "";
         for(let i = 0; i < response.data.length; i++){
             const currentTask = response.data[i];
-            userTasksTemplate += taskTemplate.replace("{{title}}", currentTask.title)
-                            .replace("{{description}}", currentTask.description)
+            userTasksTemplate += taskTemplate.replace("{{title}}", escapeHtml(currentTask.title))
+                            .replace("{{description}}", escapeHtml(currentTask.description))
                             .replace("{{"+currentTask.status+"_selected}}", "selected")
                             .replace("{{created_at}}", currentTask.created_at);
         }
@@ -145,11 +145,22 @@ function storeTask(){
             if(response.success == false){
                 alert(response.message);
             }else{
-                alert("here");
-                // location.reload();
+                location.reload();
             }
         });
         return false;
+    }
+    function escapeHtml(str) {
+        var map = {
+            '&': '&amp;',
+            '<': '&lt;',
+            '>': '&gt;',
+            '"': '&quot;',
+            "'": '&#039;'
+        };
+        return str.replace(/[&<>"']/g, function(m) {
+            return map[m];
+        });
     }
 </script>
 </html>
