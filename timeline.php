@@ -37,10 +37,10 @@
     </div>
     </nav>
 
-    <div class="container col-7 pt-4">
+    <div class="container pt-4 ">
         <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">Add New Task</button>
     </div>
-    <div class="container col-7" id="allTasks">
+    <div class="container" id="allTasks">
 
     </div>
     
@@ -52,7 +52,7 @@
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-      <form class="login" onsubmit="return storeTask();">
+        <form class="login" onsubmit="return storeTask();">
             <div class="mb-3">
                 <label for="exampleInputTitle" class="form-label">Title</label>
                 <input type="text" class="form-control" name="title" required id="title" aria-describedby="titleHelp">
@@ -87,7 +87,6 @@
         
     });
     
-
 $(document).ready(function(){
     loadUserTasks();
 });
@@ -100,11 +99,11 @@ function loadUserTasks(){
                     '<div class="p-2 flex-grow-1 ">'+
                     '<h5 class="card-title">{{title}}</h5>'+
                     '<p class="card-text">{{description}}</p>'+
-                    '<small class="card-text">Created on: {{created_at}}</small>'+
+                    '<small class="card-text">Created on: {{created_at}}</small>'+ '&nbsp'+ '&nbsp'+'<small class="card-text">Created by: {{created_by}}</small>'+
                 '</div>'+
                     '<div class="p-2">'+
                         '<div class="btn-group">'+
-                            '<select class="form-select mt-4  pl-3 pr-3" aria-label="Default select example">'+
+                            '<select class="form-select mt-4 pl-3 pr-3" aria-label="Default select example">'+
                                 '<option value="todo" {{to_do_selected}}>ToDo</option>'+
                                 '<option value="inProgress" {{inProgress_selected}}>In Progress</option>'+
                                 '<option value="done" {{done_selected}}>Done</option>'+
@@ -112,12 +111,13 @@ function loadUserTasks(){
                         '</div>'+
                     '</div>'+
                 '<div class="p-2">'+
-                    '<button type="button" class="btn btn-danger mt-4">Delete</button>'+
+                    '<a type="button" class="btn btn-danger mt-4" id="btn_delete"">Delete</a>'+
                 '</div>'+
                 '</div>'+
             '</li>'+
         '</ul>';
     const endPoint = "http://localhost/task_managment_project_web/tasks_api.php";
+    
     $.get(endPoint, function(response){
         let userTasksTemplate = "";
         for(let i = 0; i < response.data.length; i++){
@@ -125,9 +125,10 @@ function loadUserTasks(){
             userTasksTemplate += taskTemplate.replace("{{title}}", escapeHtml(currentTask.title))
                             .replace("{{description}}", escapeHtml(currentTask.description))
                             .replace("{{"+currentTask.status+"_selected}}", "selected")
-                            .replace("{{created_at}}", currentTask.created_at);
-        }
+                            .replace("{{created_at}}", currentTask.created_at)
+                            .replace("{{created_by}}", currentTask.full_name);
 
+        }
         $("#allTasks").html(userTasksTemplate);
     }); 
 }
@@ -145,7 +146,7 @@ function storeTask(){
             if(response.success == false){
                 alert(response.message);
             }else{
-                location.reload();
+               location.reload();
             }
         });
         return false;
@@ -162,5 +163,8 @@ function storeTask(){
             return map[m];
         });
     }
+
+
+    
 </script>
 </html>

@@ -95,7 +95,8 @@
     function getUserTasks($userId) {
         global $dbConnection;
 
-        $sqlQuery = "SELECT * FROM tasks WHERE id_user = :userId order by created_at DESC";
+        // $sqlQuery = "SELECT * FROM tasks WHERE id_user = :userId order by created_at DESC";
+        $sqlQuery = "SELECT `tasks`.*, `users`.full_name FROM `tasks` JOIN `users` ON `tasks`.`id_user`=`users`.id_user WHERE `users`.id_user = :userId ORDER BY created_at DESC";
         $statement = $dbConnection->prepare($sqlQuery);
         $statement->bindParam(":userId", $userId);
         
@@ -108,14 +109,13 @@
         
     }
 
-    function deletePostByIdAndUser($postId, $userId){
+    function deleteTaskById($taskId){
         global $dbConnection;
 
-        $sqlQuery = "DELETE FROM `posts` WHERE `id_post`=:id_post AND `id_user`=:id_user;";
+        $sqlQuery = "DELETE FROM `tasks` WHERE `id_task`=:id_task;";
 
         $statement = $dbConnection->prepare($sqlQuery);
-        $statement->bindParam(":id_post", $postId);
-        $statement->bindParam(":id_user", $userId);
+        $statement->bindParam(":id_task", $taskId);
 
         if($statement->execute()){
             return true;
