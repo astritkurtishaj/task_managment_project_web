@@ -3,6 +3,7 @@ session_start();
 require_once "util.php";
 header('Content-Type: application/json');
 
+
     if($_SERVER['REQUEST_METHOD'] !== 'POST'){
         echo json_encode([
             'success' => false,
@@ -33,5 +34,8 @@ $task = [
 if(!empty($title) && !empty($description) && !empty($status)){
     storeTaskToFile($task, $userId);
 }
+
+echo json_encode([]);
+
 
 ?>

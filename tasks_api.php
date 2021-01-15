@@ -22,8 +22,11 @@
 
     $userId = $_SESSION['id_user'];
 
+
     $userTasks = getUserTasks($userId);
 
+
+    
     echo json_encode([
         'success' => true,
         'message' => 'tasks list',

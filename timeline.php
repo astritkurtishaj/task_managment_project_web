@@ -99,7 +99,9 @@ function loadUserTasks(){
                     '<div class="p-2 flex-grow-1 ">'+
                     '<h5 class="card-title">{{title}}</h5>'+
                     '<p class="card-text">{{description}}</p>'+
-                    '<small class="card-text">Created on: {{created_at}}</small>'+ '&nbsp'+ '&nbsp'+'<small class="card-text">Created by: {{created_by}}</small>'+
+                    '<small class="card-text">Created on: {{created_at}}</small>'+ '&nbsp'+ '&nbsp'+
+                    '<small class="card-text">Created by: {{created_by}}</small>'+
+                    
                 '</div>'+
                     '<div class="p-2">'+
                         '<div class="btn-group">'+
@@ -111,10 +113,10 @@ function loadUserTasks(){
                         '</div>'+
                     '</div>'+
                 '<div class="p-2">'+
-                    '<a type="button" class="btn btn-danger mt-4" id="btn_delete"">Delete</a>'+
+                    '<button type="button" class="btn btn-danger mt-4 delete" id="btndelete" onclick="deleteTask({{id_task}})">Delete</button>'+
                 '</div>'+
                 '</div>'+
-            '</li>'+
+            '</li>'+ 
         '</ul>';
     const endPoint = "http://localhost/task_managment_project_web/tasks_api.php";
     
@@ -126,29 +128,50 @@ function loadUserTasks(){
                             .replace("{{description}}", escapeHtml(currentTask.description))
                             .replace("{{"+currentTask.status+"_selected}}", "selected")
                             .replace("{{created_at}}", currentTask.created_at)
-                            .replace("{{created_by}}", currentTask.full_name);
-
-        }
+                            .replace("{{created_by}}", currentTask.full_name)
+                            .replace("{{id_task}}", currentTask.id_task);
+                            
+        };
         $("#allTasks").html(userTasksTemplate);
     }); 
 }
+
+function deleteTask(id){
+    const apiEndpoint = "http://localhost/task_managment_project_web/delete_task.php";
+    const id_task = id;
+    if(confirm("Are you sure you want to delete this task?!")){
+        $.post(apiEndpoint, {
+            'id_task': id_task
+        }).done(function(response){ 
+            if(response.success == false){
+                alert(response.message);
+            }else{
+                location.reload(true);
+            }
+        });
+        return false;
+    }
+};
+
 
 function storeTask(){
     const title = $("#title").val();
     const description = $("#description").val();
     const status = $("#status").val();
     const apiEndpoint = "http://localhost/task_managment_project_web/task_logic.php";
+
         $.post(apiEndpoint, {
             'title': title,
             'description': description,
             'status': status
-        }, function(response){
+        }).done(function(response){ 
             if(response.success == false){
                 alert(response.message);
             }else{
                location.reload();
             }
         });
+
         return false;
     }
     function escapeHtml(str) {

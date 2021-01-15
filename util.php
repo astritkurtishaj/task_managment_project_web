@@ -43,9 +43,6 @@
         return null;
     }
      
-
-    
-
     function storeUserToFile(array $user){
        global $dbConnection;
         $sqlQuery = " INSERT INTO `users` (`full_name`, `email`, `password`)
@@ -66,13 +63,10 @@
         }
     }
 
-
     function signOut(){
         session_start();
         session_destroy();
     }
-
-    //function to store posts in file
 
     function storeTaskToFile(array $task, $userId){
         global $dbConnection;
@@ -91,7 +85,6 @@
         }
     }
 
-
     function getUserTasks($userId) {
         global $dbConnection;
 
@@ -109,13 +102,13 @@
         
     }
 
-    function deleteTaskById($taskId){
+    function deleteTaskById($id_task){
         global $dbConnection;
 
         $sqlQuery = "DELETE FROM `tasks` WHERE `id_task`=:id_task;";
 
         $statement = $dbConnection->prepare($sqlQuery);
-        $statement->bindParam(":id_task", $taskId);
+        $statement->bindParam(":id_task", $id_task);
 
         if($statement->execute()){
             return true;
@@ -125,38 +118,18 @@
 
     }
 
-    function updateTask($taskId, $userId, $title, $description){
+    function updateTask($status, $id_task){
         global $dbConnection;
         
-        $sqlQuery = "UPDATE `tasks` SET `title`=:title, `description`=:description WHERE `id_task`=:id_task AND `id_user`=:id_user;";
+        $sqlQuery = "UPDATE `tasks` SET `status`=:status WHERE `id_task`=:id_task;";
 
         $statement = $dbConnection->prepare($sqlQuery);
-        $statement->bindParam(":title", $title);
-        $statement->bindParam(":description", $description);
-        $statement->bindParam(":id_task", $taskId);
-        $statement->bindParam(":id_user", $userId);
-
+        $statement->bindParam(":status", $status);
+        $statement->bindParam(":id_task", $id_task);
         if($statement->execute()){
             return true;
         }else{
             return false;
         }
-    }
-
-    function getPostByIdAndUser($postId, $userId){
-        global $dbConnection;
-        $sqlQuery = "SELECT * FROM posts WHERE id_post=:id_post AND id_user=:id_user";
-
-        $statement = $dbConnection->prepare($sqlQuery);
-        $statement->bindParam(':id_post', $postId);
-        $statement->bindParam(':id_user', $userId);
-
-        if($statement->execute()){
-            $post = $statement->fetch(PDO::FETCH_ASSOC);
-            if($post !== false){
-                return $post;
-            }
-        }
-        return null;
     }
 ?>
