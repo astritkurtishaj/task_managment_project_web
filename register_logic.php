@@ -19,6 +19,7 @@
         die();
     }
 
+
     $fullName = $_POST['full_name'];
     $email = $_POST['email'];
     $password = $_POST['password'];
@@ -36,7 +37,6 @@
         die();
     }
 
-    // save to file
     storeUserToFile($user);
     header("Location: /task_managment_project_web/index.php");
 ?>
