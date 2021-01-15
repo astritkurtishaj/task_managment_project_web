@@ -94,7 +94,7 @@ $(document).ready(function(){
 function loadUserTasks(){
     const taskTemplate = 
         '<ul class="list-group pt-2">'+
-            '<li class="list-group-item">'+
+            '<li class="list-group-item" id="line_task_{{line_id_task}}">'+
                 '<div class="d-flex bd-highlight">'+
                     '<div class="p-2 flex-grow-1 ">'+
                     '<h5 class="card-title">{{title}}</h5>'+
@@ -130,7 +130,8 @@ function loadUserTasks(){
                             .replace("{{created_at}}", currentTask.created_at)
                             .replace("{{created_by}}", currentTask.full_name)
                             .replace("{{id_task}}", currentTask.id_task)
-                            .replace("{{id_task_update}}", currentTask.id_task);
+                            .replace("{{id_task_update}}", currentTask.id_task)
+                            .replace("{{line_id_task}}", currentTask.id_task);
                             
         };
         $("#allTasks").html(userTasksTemplate);
@@ -149,7 +150,7 @@ function updateTask(id){
             if(response.success == false){
                 alert(response.message);
             }else{
-                location.reload(true);
+                $("option").value(new_status);
             }
         });
         return false;
@@ -167,7 +168,7 @@ function deleteTask(id){
             if(response.success == false){
                 alert(response.message);
             }else{
-                location.reload(true);
+                $("#line_task_"+id_task).remove();
             }
         });
         return false;
