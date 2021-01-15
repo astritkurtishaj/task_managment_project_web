@@ -105,7 +105,7 @@ function loadUserTasks(){
                 '</div>'+
                     '<div class="p-2">'+
                         '<div class="btn-group">'+
-                            '<select class="form-select mt-4 pl-3 pr-3" aria-label="Default select example">'+
+                            '<select class="form-select mt-4 pl-3 pr-3" id="mySelect" onchange="updateTask({{id_task_update}});" aria-label="Default select example">'+
                                 '<option value="todo" {{to_do_selected}}>ToDo</option>'+
                                 '<option value="inProgress" {{inProgress_selected}}>In Progress</option>'+
                                 '<option value="done" {{done_selected}}>Done</option>'+
@@ -129,15 +129,36 @@ function loadUserTasks(){
                             .replace("{{"+currentTask.status+"_selected}}", "selected")
                             .replace("{{created_at}}", currentTask.created_at)
                             .replace("{{created_by}}", currentTask.full_name)
-                            .replace("{{id_task}}", currentTask.id_task);
+                            .replace("{{id_task}}", currentTask.id_task)
+                            .replace("{{id_task_update}}", currentTask.id_task);
                             
         };
         $("#allTasks").html(userTasksTemplate);
     }); 
 }
 
+function updateTask(id){
+    var new_status = $("#mySelect").val();
+    var id_task = id;
+    const apiEndpoint = "http://localhost/task_managment_project_web/update_task_logic.php";
+    if(confirm("Are you sure you want to update the status of this task?!")){
+        $.post(apiEndpoint, {
+            'id_task': id_task,
+            'status': new_status
+        }).done(function(response){ 
+            if(response.success == false){
+                alert(response.message);
+            }else{
+                location.reload(true);
+            }
+        });
+        return false;
+    }
+};
+
+
 function deleteTask(id){
-    const apiEndpoint = "http://localhost/task_managment_project_web/delete_task.php";
+    const apiEndpoint = "http://localhost/task_managment_project_web/delete_task_logic.php";
     const id_task = id;
     if(confirm("Are you sure you want to delete this task?!")){
         $.post(apiEndpoint, {

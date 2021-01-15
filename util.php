@@ -120,9 +120,7 @@
 
     function updateTask($status, $id_task){
         global $dbConnection;
-        
         $sqlQuery = "UPDATE `tasks` SET `status`=:status WHERE `id_task`=:id_task;";
-
         $statement = $dbConnection->prepare($sqlQuery);
         $statement->bindParam(":status", $status);
         $statement->bindParam(":id_task", $id_task);
