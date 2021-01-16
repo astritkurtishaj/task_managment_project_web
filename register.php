@@ -21,7 +21,7 @@ if (isUserLoggedIn()) {
 </head>
 <body>
     <div style="position: absolute; top: 15vh" class="row container-fluid justify-content-center ">
-        <form class="col-3 " id="register_form">
+        <form class="col-3 " id="register_form" style="border: 1px solid gray; padding: 50px; border-radius: 15px;">
             <div class="mb-3 mt-7">
                 <label for="fullName" class="form-label">Full Name</label>
                 <input type="text" class="form-control success" id="full_name" aria-describedby="fullNameHelp">
@@ -35,7 +35,7 @@ if (isUserLoggedIn()) {
                 <input type="password" class="form-control" name="password" id="password">
             </div>
             <button type="button" class="btn btn-primary" id="btnRegister">Register</button><br><br>
-            <small id="message"></small>
+            <small id="message"></small><br>
             <a href="/task_managment_project_web/index.php">Click here to login</a>
         </form>
     </div>
@@ -50,7 +50,7 @@ if (isUserLoggedIn()) {
                 const password = $("#password").val().trim();
                 const apiEndpoint = "http://localhost/task_managment_project_web/register_logic.php";
                 if(checkPassword(password) != true){
-                    var message = 'Password must meet the criteria: contain 6-20 charachters, letters (one must be capital), symbols and numbers';
+                    var message = 'Password must meet the criteria: \nContain 6-20 charachters, \nLetters (one must be capital), \nSymbols and numbers';
                     alert(message);
                 }   
                 else{
