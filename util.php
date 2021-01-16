@@ -43,7 +43,7 @@
         return null;
     }
      
-    function storeUserToFile(array $user){
+    function addUser(array $user){
        global $dbConnection;
         $sqlQuery = " INSERT INTO `users` (`full_name`, `email`, `password`)
         VALUES (:fullName, :email, :password); ";
@@ -68,7 +68,7 @@
         session_destroy();
     }
 
-    function storeTaskToFile(array $task, $userId){
+    function addNewTask(array $task, $userId){
         global $dbConnection;
         $sqlQuery = "INSERT INTO `tasks` (`title`,`description`,`status`, `id_user`)
         VALUES (:title, :description, :status, :userId); ";
@@ -129,4 +129,16 @@
             return false;
         }
     }
+
+
+    function checkPassword($password) { 
+        $passwordTemplate = '/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,20}$/';
+        if($password.preg_match($passwordTemplate, $passwordTemplate)) { 
+            return true;
+        }
+        else{ 
+            return false;
+        }
+    }
+
 ?>

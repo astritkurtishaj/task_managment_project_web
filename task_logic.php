@@ -30,10 +30,7 @@ $task = [
     'status' => $status
 ];
 
-
-if(!empty($title) && !empty($description) && !empty($status)){
-    storeTaskToFile($task, $userId);
-}
+addNewTask($task, $userId);
 
 echo json_encode([]);
 

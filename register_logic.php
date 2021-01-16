@@ -30,13 +30,20 @@
         'password' => $password,
         'tasks' => []
     ];
-
-
     if (doesUserExistByEmail($email)) {
         echo "This user already exists!";
         die();
     }
 
-    storeUserToFile($user);
-    header("Location: /task_managment_project_web/index.php");
+    if(!empty($fullName) && !empty($email) && !empty($password) && checkPassword($password) == true){
+        addUser($user);
+        echo json_encode([
+            'success' => true, 
+            'message' => 'User is stored to database'
+        ]);
+    }
+
+
+  
+    
 ?>
