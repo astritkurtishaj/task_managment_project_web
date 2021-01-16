@@ -50,7 +50,7 @@ if (isUserLoggedIn()) {
                 const password = $("#password").val().trim();
                 const apiEndpoint = "http://localhost/task_managment_project_web/register_logic.php";
                 if(checkPassword(password) != true){
-                    var message = 'Password is wrong, must contain 6-20 charachters, letters (one must be capital), symbols and numbers';
+                    var message = 'Password must meet the criteria: contain 6-20 charachters, letters (one must be capital), symbols and numbers';
                     alert(message);
                 }   
                 else{
