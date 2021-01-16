@@ -22,11 +22,11 @@
         <form onsubmit="return login();" class="col-3 "  style="border: 1px solid gray; padding: 40px; border-radius: 15px;">
             <div class="mb-3 mt-7">
                 <label for="exampleInputEmail1" class="form-label">Email address</label>
-                <input type="email" name="email" class="form-control" id="email" aria-describedby="emailHelp">
+                <input type="email" name="email" class="form-control" id="email" placeholder="example@example.com" aria-describedby="emailHelp">
             </div>
             <div class="mb-3">
                 <label for="exampleInputPassword1" class="form-label">Password</label>
-                <input type="password" name="password" class="form-control" id="password">
+                <input type="password" name="password" class="form-control" placeholder="**********" id="password">
             </div>  
             <button type="submit" class="btn btn-primary">Log in</button><br><br>
             <a href="/task_managment_project_web/register.php">Click here to register</a>
