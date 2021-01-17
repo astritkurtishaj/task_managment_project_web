@@ -55,11 +55,11 @@
         <form class="login" onsubmit="return storeTask();">
             <div class="mb-3">
                 <label for="exampleInputTitle" class="form-label">Title</label>
-                <input type="text" class="form-control" name="title" required id="title" aria-describedby="titleHelp">
+                <input type="text" class="form-control " name="title"  id="title" aria-describedby="titleHelp">
             </div>
             <div class="mb-3">
                 <label for="exampleInputDescription" class="form-label">Description</label>
-                <textarea class="form-control" name="description" id="description" required col=4></textarea>
+                <textarea class="form-control" name="description" id="description"  col=4></textarea>
                 </div>
             <div class="mb-3">
                 <label for="exampleInputOption" class="form-label">Task Status</label>
@@ -69,7 +69,7 @@
                     <option value="done">Done</option>
                 </select>
             </div>
-            <button type="submit" class="btn btn-primary create-task">Save</button>
+            <button type="button" class="btn btn-primary create-task" onclick="storeTask();">Save</button>
         </form>
       </div>
     </div>
@@ -182,20 +182,34 @@ function storeTask(){
     const status = $("#status").val();
     const apiEndpoint = "http://localhost/task_managment_project_web/task_logic.php";
 
-        $.post(apiEndpoint, {
-            'title': title,
-            'description': description,
-            'status': status
-        }).done(function(response){ 
-            if(response.success == false){
-                alert(response.message);
-            }else{
-               location.reload();
-            }
-        });
+        if(title !== "" && description !== ""){
+            $.post(apiEndpoint, {
+                'title': title,
+                'description': description,
+                'status': status
+            }).done(function(response){ 
+                if(response.success == false){
+                    alert(response.message);
+                }else{
+                location.reload();
+                }
+            });
 
-        return false;
-    }
+            return false;
+        }
+        else{
+            if(title == ""){
+                $("#title").css("border-color", "red");
+            }else{
+                $("#title").css("border-color", "green");
+            }
+            if(description == ""){
+                $("#description").css("border-color", "red");
+            }else{
+                $("#description").css("border-color", "green");
+            }     
+        } 
+}
     function escapeHtml(str) {
         var map = {
             '&': '&amp;',

@@ -24,15 +24,15 @@ if (isUserLoggedIn()) {
         <form class="col-3 " id="register_form" style="border: 1px solid gray; padding: 50px; border-radius: 15px;">
             <div class="mb-3 mt-7">
                 <label for="fullName" class="form-label">Full Name</label>
-                <input type="text" class="form-control success"  required id="full_name" placeholder="Your full name..." aria-describedby="fullNameHelp">
+                <input type="text" class="form-control name"  required id="full_name" placeholder="Your full name..." aria-describedby="fullNameHelp">
             </div>
             <div class="mb-3 mt-7">
                 <label for="exampleInputEmail1" class="form-label">Email address</label>
-                <input type="email" class="form-control error" required name="email" id="email" placeholder="example@example.com" aria-describedby="emailHelp">
+                <input type="email" class="form-control email" required name="email" id="email" placeholder="example@example.com" aria-describedby="emailHelp">
             </div>
             <div class="mb-3">
                 <label for="exampleInputPassword1" class="form-label">Password</label>
-                <input type="password" class="form-control" name="password" placeholder="**********" id="password">
+                <input type="password" class="form-control password" name="password" placeholder="Example*123" id="password">
             </div>
             <button type="button" class="btn btn-primary" id="btnRegister">Register</button><br><br>
             <small id="message"></small><br>
@@ -50,9 +50,22 @@ if (isUserLoggedIn()) {
             const password = $("#password").val().trim();
             const apiEndpoint = "http://localhost/task_managment_project_web/register_logic.php";
             if(checkPassword(password) != true){
-                var message = 'Password must meet the criteria: \n\nContain 6-20 charachters, \nLetters (one must be capital), \nSymbols and numbers!!';
-                alert(message);
-            }   
+                $(".password").css("border-color", "red");
+                if(fullName == ""){
+                    $(".name").css("border-color", "red");
+                }
+                else{
+                    $(".name").css("border-color", "green");
+                }
+                if(email == ""){
+                    $(".email").css("border-color", "red");
+                }
+                else{
+                    $(".email").css("border-color", "green");
+                }
+            }
+                // var message = 'Password must meet the criteria: \n\nContain 6-20 charachters, \nLetters (one must be capital), \nSymbols and numbers!!';
+                // alert(message);   
             else{
                 $.post(apiEndpoint, {
                 'full_name': fullName,
@@ -65,13 +78,18 @@ if (isUserLoggedIn()) {
                     $("#full_name").val("");
                     $("#email").val("");
                     $("#password").val("");
-                    $("small").text("You successfully Registered click below to login!").css("color", "green"); 
+                    $(".password").css("border-color", "#ced4da");
+                    $(".name").css("border-color", "#ced4da");
+                    $(".email").css("border-color", "#ced4da");
+                    $("small").text("You successfully Registered click below to login!").css("color", "green").css("font-weight", "bold"); 
                 }
                 });
                 return false;
             }
     })           
 });
+
+
 
 function checkPassword(password) { 
     var passwordTemplate = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,20}$/;
