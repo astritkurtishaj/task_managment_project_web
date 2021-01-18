@@ -25,14 +25,17 @@ if (isUserLoggedIn()) {
             <div class="mb-3 mt-7">
                 <label for="fullName" class="form-label">Full Name</label>
                 <input type="text" class="form-control name"  required id="full_name" placeholder="Your full name..." aria-describedby="fullNameHelp">
+                <div id="name_message"></div>
             </div>
             <div class="mb-3 mt-7">
                 <label for="exampleInputEmail1" class="form-label">Email address</label>
                 <input type="email" class="form-control email" required name="email" id="email" placeholder="example@example.com" aria-describedby="emailHelp">
+                <div id="email_message"></div>
             </div>
             <div class="mb-3">
                 <label for="exampleInputPassword1" class="form-label">Password</label>
                 <input type="password" class="form-control password" name="password" placeholder="Example*123" id="password">
+                <div id="password_message"></div>
             </div>
             <button type="button" class="btn btn-primary" id="btnRegister">Register</button><br><br>
             <small id="message"></small><br>
@@ -51,21 +54,24 @@ if (isUserLoggedIn()) {
             const apiEndpoint = "http://localhost/task_managment_project_web/register_logic.php";
             if(checkPassword(password) != true){
                 $(".password").css("border-color", "red");
+                $("#password_message").text("Strong password is required!!").css("color", "red");
                 if(fullName == ""){
                     $(".name").css("border-color", "red");
+                    $("#name_message").text("Name is required!!").css("color", "red");
                 }
                 else{
                     $(".name").css("border-color", "green");
+                    $("#name_message").text("");
                 }
                 if(email == ""){
                     $(".email").css("border-color", "red");
+                    $("#email_message").text("Email is required!!").css("color", "red");
                 }
                 else{
                     $(".email").css("border-color", "green");
+                    $("#email_message").text("");
                 }
             }
-                // var message = 'Password must meet the criteria: \n\nContain 6-20 charachters, \nLetters (one must be capital), \nSymbols and numbers!!';
-                // alert(message);   
             else{
                 $.post(apiEndpoint, {
                 'full_name': fullName,
@@ -79,6 +85,7 @@ if (isUserLoggedIn()) {
                     $("#email").val("");
                     $("#password").val("");
                     $(".password").css("border-color", "#ced4da");
+                    $("#password_message").text("");
                     $(".name").css("border-color", "#ced4da");
                     $(".email").css("border-color", "#ced4da");
                     $("small").text("You successfully Registered click below to login!").css("color", "green").css("font-weight", "bold"); 
