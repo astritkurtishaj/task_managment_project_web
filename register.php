@@ -95,9 +95,6 @@ if (isUserLoggedIn()) {
             }
     })           
 });
-
-
-
 function checkPassword(password) { 
     var passwordTemplate = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,20}$/;
     if(password.match(passwordTemplate)) { 

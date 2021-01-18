@@ -56,10 +56,12 @@
             <div class="mb-3">
                 <label for="exampleInputTitle" class="form-label">Title</label>
                 <input type="text" class="form-control " name="title"  id="title" aria-describedby="titleHelp">
+                <div id="title_message"></div>
             </div>
             <div class="mb-3">
                 <label for="exampleInputDescription" class="form-label">Description</label>
                 <textarea class="form-control" name="description" id="description"  col=4></textarea>
+                <div id="description_message"></div>
                 </div>
             <div class="mb-3">
                 <label for="exampleInputOption" class="form-label">Task Status</label>
@@ -200,13 +202,18 @@ function storeTask(){
         else{
             if(title == ""){
                 $("#title").css("border-color", "red");
+                $("#title_message").text("Title can not be blank!!").css("color", "red");
+                
             }else{
                 $("#title").css("border-color", "green");
+                $("#title_message").text("");
             }
             if(description == ""){
                 $("#description").css("border-color", "red");
+                $("#description_message").text("Description can not be blank!!").css("color", "red");
             }else{
                 $("#description").css("border-color", "green");
+                $("#description_message").text("");
             }     
         } 
 }
