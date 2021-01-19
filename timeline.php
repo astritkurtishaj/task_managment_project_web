@@ -52,7 +52,7 @@
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-        <form class="login" onsubmit="return storeTask();">
+        <form class="add_task" id="add_task" name="add_task"onsubmit="return storeTask();">
             <div class="mb-3">
                 <label for="exampleInputTitle" class="form-label">Title</label>
                 <input type="text" class="form-control " name="title"  id="title" aria-describedby="titleHelp">
@@ -71,7 +71,7 @@
                     <option value="done">Done</option>
                 </select>
             </div>
-            <button type="button" class="btn btn-primary create-task" onclick="storeTask();">Save</button>
+            <button type="button" class="btn btn-primary create-task" id="save_task" onclick="storeTask();">Save</button>
         </form>
       </div>
     </div>
@@ -103,7 +103,6 @@ function loadUserTasks(){
                     '<p class="card-text">{{description}}</p>'+
                     '<small class="card-text">Created on: {{created_at}}</small>'+ '&nbsp'+ '&nbsp'+
                     '<small class="card-text">Created by: {{created_by}}</small>'+
-                    
                 '</div>'+
                     '<div class="p-2">'+
                         '<div class="btn-group">'+
@@ -176,8 +175,6 @@ function deleteTask(id){
         return false;
     }
 };
-
-
 function storeTask(){
     const title = $("#title").val();
     const description = $("#description").val();
@@ -193,10 +190,13 @@ function storeTask(){
                 if(response.success == false){
                     alert(response.message);
                 }else{
-                location.reload();
+                    loadUserTasks();
+                    $('#exampleModal').modal('hide');
+                    $('#exampleModal').on('hidden.bs.modal', function () {
+                        $(this).find("input,textarea").val('').end();
+                    });
                 }
             });
-
             return false;
         }
         else{
@@ -213,21 +213,22 @@ function storeTask(){
                 $("#description_message").text("Description can not be blank!!").css("color", "red");
             }else{
                 $("#description").css("border-color", "green");
-                $("#description_message").text("");
+                $("#title_message").text("");
             }     
         } 
 }
-    function escapeHtml(str) {
-        var map = {
-            '&': '&amp;',
-            '<': '&lt;',
-            '>': '&gt;',
-            '"': '&quot;',
-            "'": '&#039;'
-        };
-        return str.replace(/[&<>"']/g, function(m) {
-            return map[m];
-        });
-    }
+
+function escapeHtml(str) {
+    var map = {
+        '&': '&amp;',
+        '<': '&lt;',
+        '>': '&gt;',
+        '"': '&quot;',
+        "'": '&#039;'
+    };
+    return str.replace(/[&<>"']/g, function(m) {
+        return map[m];
+    });
+}
 </script>
 </html>

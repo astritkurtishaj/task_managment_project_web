@@ -31,7 +31,10 @@
         'tasks' => []
     ];
     if (doesUserExistByEmail($email)) {
-        echo "This user already exists!";
+        echo json_encode([
+            'success' => false,
+            'message' => 'User already exists'
+        ]);
         die();
     }
 

@@ -51,6 +51,7 @@ if (isUserLoggedIn()) {
             const fullName = $("#full_name").val().trim();
             const email = $("#email").val().trim();
             const password = $("#password").val().trim();
+            var emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
             const apiEndpoint = "http://localhost/task_managment_project_web/register_logic.php";
             if(checkPassword(password) != true){
                 $(".password").css("border-color", "red");
@@ -63,7 +64,7 @@ if (isUserLoggedIn()) {
                     $(".name").css("border-color", "green");
                     $("#name_message").text("");
                 }
-                if(email == ""){
+                if(email == "" || !email.match(emailPattern)){
                     $(".email").css("border-color", "red");
                     $("#email_message").text("Email is required!!").css("color", "red");
                 }

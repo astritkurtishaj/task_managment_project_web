@@ -2,7 +2,6 @@
     session_start();
     require_once "util.php";
     
-    // if logged in then redirect to timeline.php
     if(isUserLoggedIn()){
         header("Location: /task_managment_project_web/timeline.php");
         die();
@@ -36,6 +35,7 @@
 </body>
 
 <script>
+
     function login(){
       const email = $("#email").val();
       const password = $("#password").val();
