@@ -53,26 +53,11 @@ if (isUserLoggedIn()) {
             const password = $("#password").val().trim();
             var emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
             const apiEndpoint = "http://localhost/task_managment_project_web/register_logic.php";
-            if(checkPassword(password) != true){
-                $(".password").css("border-color", "red");
-                $("#password_message").text("Strong password is required!!").css("color", "red");
-                if(fullName == ""){
-                    $(".name").css("border-color", "red");
-                    $("#name_message").text("Name is required!!").css("color", "red");
-                }
-                else{
-                    $(".name").css("border-color", "green");
-                    $("#name_message").text("");
-                }
-                if(email == "" || !email.match(emailPattern)){
-                    $(".email").css("border-color", "red");
-                    $("#email_message").text("Email is required!!").css("color", "red");
-                }
-                else{
-                    $(".email").css("border-color", "green");
-                    $("#email_message").text("");
-                }
+            
+            if(validatedInputs() != true){
+                return false;
             }
+           
             else{
                 $.post(apiEndpoint, {
                 'full_name': fullName,
@@ -96,13 +81,58 @@ if (isUserLoggedIn()) {
             }
     })           
 });
-function checkPassword(password) { 
-    var passwordTemplate = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,20}$/;
-    if(password.match(passwordTemplate)) { 
+
+function validatedInputs(){
+    const fullName = $("#full_name").val().trim();
+    const email = $("#email").val().trim();
+    const inputedPassword = $("#password").val().trim();
+    
+        if(validateName(fullName) != true || validateEmail(email) != true || checkPassword(inputedPassword) != true)
+            return false;
+        else {
+            return true;
+        }
+}
+function validateName(name){
+    if(name == ""){
+        $(".name").css("border-color", "red");
+        $("#name_message").text("Name is required!!").css("color", "red");
+        return false;
+    }
+    else{
+        $(".name").css("border-color", "green");
+        $("#name_message").text("");
         return true;
     }
-    else{ 
+
+}
+function validateEmail(email){
+    var emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
+    if(email == "" || !email.match(emailPattern)){
+        $(".email").css("border-color", "red");
+        $("#email_message").text("Email is required!!").css("color", "red");
         return false;
+    }
+    else{
+        $(".email").css("border-color", "green");
+        $("#email_message").text("");
+        return true;
+    }
+
+}
+
+function checkPassword(password) { 
+    var passwordTemplate = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,20}$/;
+    if(!password.match(passwordTemplate)) { 
+        $(".password").css("border-color", "red");
+        $("#password_message").text("Strong password is required!!").css("color", "red");
+        return false;
+    }
+    else{ 
+        $(".password").css("border-color", "green");
+        $("#password_message").text("");
+        return true;
+       
     }
 }
 </script>

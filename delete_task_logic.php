@@ -10,9 +10,12 @@ session_start();
             'message' => 'POST Method HTTP required'
         ]);
     }
+
+    $id_user = $_SESSION['id_user'];
     $id_task = $_POST['id_task'];
-    if(isset($_POST['id_task'])){
-        deleteTaskById($id_task);
+
+    if(isset($_POST['id_task']) && isset($_POST['id_user'])){
+        deleteTaskById($id_task, $id_user);
     }
 
     echo json_encode([]);

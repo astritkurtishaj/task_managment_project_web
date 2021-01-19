@@ -101,13 +101,13 @@
         
     }
 
-    function deleteTaskById($id_task){
+    function deleteTaskById($id_task, $id_user){
         global $dbConnection;
 
-        $sqlQuery = "DELETE FROM `tasks` WHERE `id_task`=:id_task;";
-
+        $sqlQuery = "DELETE FROM `tasks` WHERE `id_task`=:id_task and `id_user`=:id_user;";
         $statement = $dbConnection->prepare($sqlQuery);
         $statement->bindParam(":id_task", $id_task);
+        $statement->bindParam(":id_user", $id_user);
 
         if($statement->execute()){
             return true;
@@ -117,12 +117,13 @@
 
     }
 
-    function updateTask($status, $id_task){
+    function updateTask($status, $id_task, $id_user){
         global $dbConnection;
-        $sqlQuery = "UPDATE `tasks` SET `status`=:status WHERE `id_task`=:id_task;";
+        $sqlQuery = "UPDATE `tasks` SET `status`=:status WHERE `id_task`=:id_task AND `id_user`=:id_user;";
         $statement = $dbConnection->prepare($sqlQuery);
         $statement->bindParam(":status", $status);
         $statement->bindParam(":id_task", $id_task);
+        $statement->bindParam(":id_user", $id_user);
         if($statement->execute()){
             return true;
         }else{

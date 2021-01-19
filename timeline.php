@@ -105,7 +105,7 @@ function loadUserTasks(){
                 '</div>'+
                     '<div class="p-2">'+
                         '<div class="btn-group">'+
-                            '<select class="form-select mt-4 pl-3 pr-3" id="mySelect" onchange="updateTask({{id_task_update}});" aria-label="Default select example">'+
+                            '<select class="form-select mt-4 pl-3 pr-3" id="mySelect" onchange="updateTask({{id_task_update}},{{id_user_update}});" aria-label="Default select example">'+
                                 '<option value="todo" {{to_do_selected}}>ToDo</option>'+
                                 '<option value="inProgress" {{inProgress_selected}}>In Progress</option>'+
                                 '<option value="done" {{done_selected}}>Done</option>'+
@@ -113,7 +113,7 @@ function loadUserTasks(){
                         '</div>'+
                     '</div>'+
                 '<div class="p-2">'+
-                    '<button type="button" class="btn btn-danger mt-4 delete" id="btndelete" onclick="deleteTask({{id_task}})">Delete</button>'+
+                    '<button type="button" class="btn btn-danger mt-4 delete" id="btndelete" onclick="deleteTask({{id_task}},{{id_user}})">Delete</button>'+
                 '</div>'+
                 '</div>'+
             '</li>'+ 
@@ -131,21 +131,27 @@ function loadUserTasks(){
                             .replace("{{created_by}}", currentTask.full_name)
                             .replace("{{id_task}}", currentTask.id_task)
                             .replace("{{id_task_update}}", currentTask.id_task)
-                            .replace("{{line_id_task}}", currentTask.id_task);
+                            .replace("{{line_id_task}}", currentTask.id_task)
+                            .replace("{{id_user}}", currentTask.id_user)
+                            .replace("{{id_user_update}}", currentTask.id_user);
+                           
                             
         };
         $("#allTasks").html(userTasksTemplate);
     }); 
 }
 
-function updateTask(id){
+function updateTask(idTask, idUser){
     var new_status = $("#mySelect").val();
-    var id_task = id;
+    var id_task = idTask;
+    var id_user = idUser;
+
     const apiEndpoint = "http://localhost/task_managment_project_web/update_task_logic.php";
     if(confirm("Are you sure you want to update the status of this task?!")){
         $.post(apiEndpoint, {
             'id_task': id_task,
-            'status': new_status
+            'status': new_status,
+            'id_user': idUser
         }).done(function(response){ 
             if(response.success == false){
                 alert(response.message);
@@ -158,12 +164,14 @@ function updateTask(id){
 };
 
 
-function deleteTask(id){
+function deleteTask(idTask, idUser){
     const apiEndpoint = "http://localhost/task_managment_project_web/delete_task_logic.php";
-    const id_task = id;
+    const id_task = idTask;
+    const id_user = idUser;
     if(confirm("Are you sure you want to delete this task?!")){
         $.post(apiEndpoint, {
-            'id_task': id_task
+            'id_task': id_task,
+            'id_user': id_user
         }).done(function(response){ 
             if(response.success == false){
                 alert(response.message);

@@ -12,9 +12,10 @@ session_start();
     }
     $id_task = $_POST['id_task'];
     $new_status = $_POST['status'];
+    $id_user = $_SESSION['id_user'];
     
-    if(isset($_POST['id_task']) && isset($_POST['status'])){
-        updateTask($new_status, $id_task);
+    if(isset($_POST['id_task']) && isset($_POST['status']) && isset($_POST['id_user'])){
+        updateTask($new_status, $id_task, $id_user);
     }
 
     // echo "<pre>";
