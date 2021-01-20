@@ -1,11 +1,8 @@
 <?php
-// connection parameters
     $host = "localhost";
     $user = "root";
     $password = "";
     $dbName = "task_management";
-
-    //create connection
 
     $dbConnection = null;
     try{
@@ -14,7 +11,6 @@
         }catch(Exeption $e){
             echo "Connection failed: ".$e->getMessage();
             die();
-
     }
 
     if(!$dbConnection){
