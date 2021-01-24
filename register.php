@@ -21,7 +21,7 @@ if (isUserLoggedIn()) {
 </head>
 <body>
     <div style="position: absolute; top: 15vh" class="row container-fluid justify-content-center ">
-        <form class="col-3 " id="register_form" style="border: 1px solid gray; padding: 50px; border-radius: 15px;">
+        <form onkeyup="validatedInputs();" class="col-3 " id="register_form" style="border: 1px solid gray; padding: 50px; border-radius: 15px;">
             <div class="mb-3 mt-7">
                 <label for="fullName" class="form-label">Full Name</label>
                 <input type="text" class="form-control name"  required id="full_name" placeholder="Your full name..." aria-describedby="fullNameHelp">
@@ -94,7 +94,7 @@ function validatedInputs(){
         }
 }
 function validateName(name){
-    if(name == ""){
+    if(name.length < 4){
         $(".name").css("border-color", "red");
         $("#name_message").text("Name is required!!").css("color", "red");
         return false;

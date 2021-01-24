@@ -49,7 +49,7 @@
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-        <form class="add_task" id="add_task" name="add_task"onsubmit="return storeTask();">
+        <form onkeyup="validateInputs();" class="add_task" id="add_task" name="add_task"onsubmit="return storeTask();">
             <div class="mb-3">
                 <label for="exampleInputTitle" class="form-label">Title</label>
                 <input type="text" class="form-control " name="title"  id="title" aria-describedby="titleHelp">
@@ -186,7 +186,12 @@ function storeTask(){
     const status = $("#status").val();
     const apiEndpoint = "http://localhost/task_managment_project_web/task_logic.php";
 
-        if(title !== "" && description !== ""){
+        
+        if(validateInputs() != true){
+            return false;
+        }
+        
+        else{
             $.post(apiEndpoint, {
                 'title': title,
                 'description': description,
@@ -203,24 +208,46 @@ function storeTask(){
                 }
             });
             return false;
-        }
-        else{
-            if(title == ""){
-                $("#title").css("border-color", "red");
-                $("#title_message").text("Title can not be blank!!").css("color", "red");
-                
-            }else{
-                $("#title").css("border-color", "green");
-                $("#title_message").text("");
-            }
-            if(description == ""){
-                $("#description").css("border-color", "red");
-                $("#description_message").text("Description can not be blank!!").css("color", "red");
-            }else{
-                $("#description").css("border-color", "green");
-                $("#title_message").text("");
-            }     
-        } 
+        }        
+} 
+
+function validateInputs(){
+    const title = $("#title").val().trim();
+    const description = $("#description").val().trim();
+    const status = $("#status").val();
+
+    if(validateTitle(title) != true || validateDescription(description) != true){
+        return false;
+    }
+    else{
+        return true;
+    }
+}
+
+function validateTitle(title){
+    if(title.length < 5){
+        $("#title").css("border-color", "red");
+        $("#title_message").text("Title can not be blank!!").css("color", "red");
+        return false;
+
+    }else{
+        $("#title").css("border-color", "green");
+        $("#title_message").text("");
+        return true;
+    }
+
+}
+
+function validateDescription(description){
+    if(description.length < 7){
+        $("#description").css("border-color", "red");
+        $("#description_message").text("Description can not be blank!!").css("color", "red");
+        return false;
+    }else{
+        $("#description").css("border-color", "green");
+        $("#description_message").text("");
+        return true;
+    } 
 }
 
 function escapeHtml(str) {
