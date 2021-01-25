@@ -227,7 +227,7 @@ function validateInputs(){
 function validateTitle(title){
     if(title.length < 5){
         $("#title").css("border-color", "red");
-        $("#title_message").text("Title can not be blank!!").css("color", "red");
+        $("#title_message").text("Title must be more than 4 charaters!!").css("color", "red").css("font-size", "12px");
         return false;
 
     }else{
@@ -241,7 +241,7 @@ function validateTitle(title){
 function validateDescription(description){
     if(description.length < 7){
         $("#description").css("border-color", "red");
-        $("#description_message").text("Description can not be blank!!").css("color", "red");
+        $("#description_message").text("Description must be more than 6 characters!!").css("color", "red").css("font-size", "12px");
         return false;
     }else{
         $("#description").css("border-color", "green");

@@ -96,7 +96,7 @@ function validatedInputs(){
 function validateName(name){
     if(name.length < 4){
         $(".name").css("border-color", "red");
-        $("#name_message").text("Name is required!!").css("color", "red");
+        $("#name_message").text("Name is required!!").css("color", "red").css("font-size", "12px");
         return false;
     }
     else{
@@ -110,7 +110,7 @@ function validateEmail(email){
     var emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
     if(email == "" || !email.match(emailPattern)){
         $(".email").css("border-color", "red");
-        $("#email_message").text("Email is required!!").css("color", "red");
+        $("#email_message").text("Email is required!!").css("color", "red").css("font-size", "12px");
         return false;
     }
     else{
