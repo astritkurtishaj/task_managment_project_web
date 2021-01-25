@@ -174,6 +174,8 @@ function updateTask(idTask, idUser){
             }
         });
         return false;
+    }else{
+        loadUserTasks();
     }
 };
 
