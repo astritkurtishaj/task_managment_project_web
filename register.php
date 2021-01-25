@@ -42,5 +42,5 @@ if (isUserLoggedIn()) {
     </div>
 </body>
 
-<script src="js-logic.js"></script>
+<script src="index.js"></script>
 </html>
